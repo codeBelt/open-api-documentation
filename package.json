@@ -1,0 +1,77 @@
+{
+  "name": "typescript-node-api",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js,json,md,yml}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "scripts": {
+    "build": "npm run clean:dist && npm run build-ts && npm run lint",
+    "build-ts": "tsc",
+    "clean:dist": "rimraf dist",
+    "debug": "npm run build && npm run watch-debug",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "serve": "node dist/server.js",
+    "serve-debug": "nodemon --inspect dist/server.js",
+    "start": "npm run serve",
+    "test": "jest --forceExit --coverage --verbose",
+    "dev": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\"",
+    "watch-node": "nodemon dist/server.js",
+    "watch-test": "npm run test -- --watchAll",
+    "watch-ts": "tsc -w",
+    "prettier": "npx prettier --write \"./**/*.{ts,js,json,md}\""
+  },
+  "dependencies": {
+    "body-parser": "1.19.0",
+    "compression": "1.7.4",
+    "dotenv": "8.2.0",
+    "errorhandler": "1.5.1",
+    "express": "4.17.1",
+    "express-session": "1.17.0",
+    "express-validator": "6.4.0",
+    "lusca": "1.6.1",
+    "swagger-ui-express": "4.1.3",
+    "winston": "3.2.1"
+  },
+  "devDependencies": {
+    "@types/body-parser": "1.19.0",
+    "@types/chai": "4.2.9",
+    "@types/compression": "1.7.0",
+    "@types/concurrently": "5.1.0",
+    "@types/errorhandler": "1.5.0",
+    "@types/eslint": "6.1.8",
+    "@types/express": "4.17.2",
+    "@types/express-session": "1.15.16",
+    "@types/jest": "25.1.2",
+    "@types/lusca": "1.6.1",
+    "@types/node": "13.7.1",
+    "@types/request": "2.48.4",
+    "@types/supertest": "2.0.8",
+    "@types/swagger-ui-express": "4.1.1",
+    "@types/winston": "2.4.4",
+    "@typescript-eslint/eslint-plugin": "2.19.2",
+    "@typescript-eslint/parser": "2.19.2",
+    "chai": "4.2.0",
+    "concurrently": "5.1.0",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-destructuring": "2.1.0",
+    "eslint-plugin-prettier": "3.1.2",
+    "jest": "25.1.0",
+    "nodemon": "2.0.2",
+    "prettier": "1.19.1",
+    "rimraf": "3.0.2",
+    "supertest": "4.0.2",
+    "ts-jest": "25.2.0",
+    "ts-node": "8.6.2",
+    "typescript": "3.7.5"
+  }
+}
